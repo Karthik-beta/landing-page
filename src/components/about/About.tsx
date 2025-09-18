@@ -19,7 +19,7 @@ export const About = () => {
       <div className="border rounded-lg py-12 border-foreground/10 ring-1 ring-foreground/10 bg-gradient-to-r from-foreground/[0.04] via-foreground/[0.02] to-transparent dark:border-white/10 dark:ring-white/[0.06]">
         <div className="px-6 flex flex-col-reverse md:flex-row gap-8 md:gap-12 ">
           <Image
-            src="/undraw_all-the-data_5lil.svg"
+            src="/undraw_team-work_i1f3.svg"
             alt="Team working together illustration"
             width={300}
             height={300}
@@ -36,9 +36,10 @@ export const About = () => {
               </h2>
               <AboutParagraph text={paragraphText} className="text-xl text-muted-foreground mt-4" />
             </div>
-
-            <Statistics />
           </div>
+        </div>
+        <div className="px-6 mt-8">
+          <Statistics />
         </div>
       </div>
     </section>
