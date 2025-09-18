@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import { Menu } from "lucide-react";
@@ -15,7 +15,7 @@ export default function MobileMenu({ routes }: { routes: RouteProps[] }) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
-    <div className="flex md:hidden justify-end items-center gap-2">
+    <div className="flex items-center justify-end gap-2 md:hidden">
       <ModeToggle />
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetTrigger className="px-2" aria-label="Toggle navigation menu">
@@ -23,9 +23,9 @@ export default function MobileMenu({ routes }: { routes: RouteProps[] }) {
         </SheetTrigger>
         <SheetContent side="left">
           <SheetHeader>
-            <SheetTitle className="font-bold text-xl">Pivotr.</SheetTitle>
+            <SheetTitle className="text-xl font-bold">Pivotr.</SheetTitle>
           </SheetHeader>
-          <nav className="flex flex-col items-center gap-2 mt-4">
+          <nav className="mt-4 flex flex-col items-center gap-2">
             {routes.map(({ href, label }) => (
               <a
                 key={label}
@@ -42,5 +42,3 @@ export default function MobileMenu({ routes }: { routes: RouteProps[] }) {
     </div>
   );
 }
-
-

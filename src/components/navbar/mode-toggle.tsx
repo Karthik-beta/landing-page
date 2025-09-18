@@ -10,19 +10,18 @@ export function ModeToggle() {
   useEffect(() => setMounted(true), []);
 
   const current = useMemo<"system" | "light" | "dark">(
-    () => (theme === "system" ? "system" : (resolvedTheme as "light" | "dark" | undefined) ?? "system"),
-    [theme, resolvedTheme]
+    () =>
+      theme === "system" ? "system" : ((resolvedTheme as "light" | "dark" | undefined) ?? "system"),
+    [theme, resolvedTheme],
   );
 
-  const currentIndex = useMemo(() => (current === "system" ? 0 : current === "light" ? 1 : 2), [current]);
+  const currentIndex = useMemo(
+    () => (current === "system" ? 0 : current === "light" ? 1 : 2),
+    [current],
+  );
 
   const SystemIcon = () => (
-    <svg
-      className="w-4 h-4"
-      viewBox="0 0 16 16"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg className="h-4 w-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -34,12 +33,7 @@ export function ModeToggle() {
   );
 
   const LightIcon = () => (
-    <svg
-      className="w-4 h-4"
-      viewBox="0 0 16 16"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg className="h-4 w-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -51,12 +45,7 @@ export function ModeToggle() {
   );
 
   const DarkIcon = () => (
-    <svg
-      className="w-4 h-4"
-      viewBox="0 0 16 16"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg className="h-4 w-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -72,16 +61,16 @@ export function ModeToggle() {
       role="radiogroup"
       aria-label="Select a display theme:"
       className={cn(
-        "relative ml-auto inline-flex top-0 h-8 items-center gap-1 rounded-full border px-1",
-        "bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+        "relative top-0 ml-auto inline-flex h-8 items-center gap-1 rounded-full border px-1",
+        "bg-background/60 supports-[backdrop-filter]:bg-background/60 backdrop-blur",
       )}
     >
       <span
         aria-hidden
         className={cn(
-          "pointer-events-none absolute left-0 top-1/2 h-8 w-10 -translate-y-1/2 rounded-full z-0 will-change-transform",
-          "bg-black/10 dark:bg-white/20 ring-1 ring-black/20 dark:ring-white/40",
-          "shadow-md shadow-black/20 dark:shadow-black/70 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
+          "pointer-events-none absolute top-1/2 left-0 z-0 h-8 w-10 -translate-y-1/2 rounded-full will-change-transform",
+          "bg-black/10 ring-1 ring-black/20 dark:bg-white/20 dark:ring-white/40",
+          "shadow-md shadow-black/20 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] dark:shadow-black/70",
         )}
         style={{
           transform: `translateX(${mounted ? currentIndex * 2.25 : 0}rem)`,
@@ -119,8 +108,8 @@ export function ModeToggle() {
       <label
         htmlFor={id}
         className={cn(
-          "relative z-10 inline-flex items-center justify-center size-8 rounded-full text-foreground",
-          "cursor-pointer"
+          "text-foreground relative z-10 inline-flex size-8 items-center justify-center rounded-full",
+          "cursor-pointer",
         )}
       >
         <span className="flex items-center justify-center">{icon}</span>
@@ -158,4 +147,3 @@ export function ModeToggle() {
     </Wrapper>
   );
 }
-

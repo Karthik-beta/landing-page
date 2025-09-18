@@ -75,4 +75,3 @@ export const useTypewriter = ({
     isComplete: !loop && currentWordIndex === words.length - 1 && phase === "pausing",
   };
 };
- 

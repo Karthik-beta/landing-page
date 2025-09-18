@@ -87,55 +87,79 @@
 /* *=========== Claude.ai Inspired Theme =========== */
 @layer base {
   :root {
-    --background: 48 2% 98%;
-    --foreground: 60 5% 8%; /* before => --foreground: 240 10% 3.9%; */
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    /* Claude.ai brand palette (light) */
+    /* Ivory Light background, Slate Dark foreground */
+    --background: 60 22% 97%; /* #FAFAF7 */
+    --foreground: 0 0% 10%; /* #191919 */
+
+    --card: 0 0% 100%; /* #FFFFFF */
+    --card-foreground: 0 0% 10%;
+
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    /* --primary: 240 4% 46%; */
-    --primary: 0 0% 9%;
-    /* --primary-foreground: 0 0% 100%; */
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 5% 96%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 5% 96%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 5% 96%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
+    --popover-foreground: 0 0% 10%;
+
+    /* Book Cloth as primary */
+    --primary: 16 48% 57%; /* #C6785C */
+    --primary-foreground: 0 0% 98%; /* on-primary text */
+
+    /* Cloud tones for secondary/muted */
+    --secondary: 60 4% 74%; /* Cloud Light #BFBFBA */
+    --secondary-foreground: 0 0% 15%;
+
+    --muted: 60 4% 74%;
+    --muted-foreground: 60 2% 56%; /* Cloud Medium #91918D */
+
+    /* Manilla as accent */
+    --accent: 38 49% 82%; /* #E8D8BC */
+    --accent-foreground: 0 0% 15%;
+
+    /* Error */
+    --destructive: 1 49% 51%; /* #BF4543 */
     --destructive-foreground: 0 0% 98%;
-    --border: 240 5% 90%;
-    --input: 240 5% 90%;
-    --ring: 240 5% 65%;
+
+    /* Ivory Dark as border/input, Focus blue as ring */
+    --border: 60 10% 89%; /* #E5E4DF */
+    --input: 60 10% 89%;
+    --ring: 229 87% 62%; /* Focus #4A6AF2 */
     --radius: 0.75rem;
   }
 
   .dark {
-    --background: 60 5% 15%;
-    --foreground: 48 2% 98%; /* before => --foreground: 240 5% 95%; */
-    --card: 240 5% 12%;
-    --card-foreground: 240 5% 95%;
-    --popover: 240 6% 10%;
-    --popover-foreground: 240 5% 95%;
-    /* --primary: 240 5% 63%; */
-    --primary: 0 0% 98%;
-    /* --primary-foreground: 240 5% 98%; */
-    --primary-foreground: 0 0% 9%;
-    --secondary: 240 4% 16%;
-    --secondary-foreground: 240 5% 98%;
-    --muted: 240 4% 16%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 4% 16%;
-    --accent-foreground: 240 5% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 85.7% 97.3%;
-    --border: 240 4% 20%;
-    --input: 240 4% 20%;
-    --ring: 240 5% 45%;
+    /* Claude.ai brand palette (dark) */
+    --background: 0 0% 10%; /* Slate Dark #191919 */
+    --foreground: 60 22% 97%; /* Ivory Light #FAFAF7 */
+
+    --card: 60 1% 15%; /* Slate Medium #262625 */
+    --card-foreground: 60 22% 97%;
+
+    --popover: 60 1% 12%;
+    --popover-foreground: 60 22% 97%;
+
+    /* Book Cloth as primary */
+    --primary: 16 48% 57%; /* #C6785C */
+    --primary-foreground: 0 0% 100%;
+
+    /* Cloud tones */
+    --secondary: 60 2% 40%; /* Cloud Dark #666663 */
+    --secondary-foreground: 60 22% 97%;
+
+    --muted: 60 2% 25%;
+    --muted-foreground: 60 4% 74%;
+
+    /* Kraft/Manilla accents */
+    --accent: 25 50% 66%; /* Kraft #D4A27F */
+    --accent-foreground: 0 0% 15%;
+
+    /* Error */
+    --destructive: 1 49% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Slate Light border, Focus blue ring */
+    --border: 60 2% 25%; /* Slate Light #40403E */
+    --input: 60 2% 25%;
+    --ring: 229 87% 62%;
   }
 }
-
 
 @layer base {
   * {
@@ -143,7 +167,9 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
   }
 }
 

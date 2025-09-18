@@ -20,12 +20,12 @@ export const Hero = () => {
   return (
     <section id="hero" className="container py-10 md:py-32">
       {/* Only the hero content is a grid, like the original */}
-      <div className="grid lg:grid-cols-2 place-items-center gap-10">
+      <div className="grid place-items-center gap-10 lg:grid-cols-2">
         {/* Left column */}
-        <div className="text-center lg:text-start space-y-6">
-          <main className="text-5xl md:text-6xl font-bold">
+        <div className="space-y-6 text-center lg:text-start">
+          <main className="text-5xl font-bold md:text-6xl">
             <h1 className="inline">
-              <span className="inline bg-gradient-to-r from-[#F596D3] to-[#D247BF] text-transparent bg-clip-text gradient-shimmer">
+              <span className="from-accent via-secondary to-primary gradient-shimmer inline bg-gradient-to-r bg-clip-text text-transparent">
                 Better
               </span>{" "}
               Solutions
@@ -34,24 +34,24 @@ export const Hero = () => {
             <h2 className="inline">
               <TypewriterText
                 words={["Business", "Teams", "Growth", "Success", "Future"]}
-                className="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text"
+                className="from-accent via-primary/80 to-primary inline bg-gradient-to-r bg-clip-text text-transparent"
                 typeSpeed={120}
                 deleteSpeed={80}
                 delayBetweenWords={2500}
                 loop={true}
                 showCursor={true}
-                cursorClassName="bg-gradient-to-r from-[#61DAFB] to-[#03a3d7]"
+                cursorClassName="bg-gradient-to-r from-accent to-primary"
               />{" "}
             </h2>
           </main>
 
-          <p className="text-xl text-muted-foreground md:w-10/12 mx-auto lg:mx-0">
+          <p className="text-muted-foreground mx-auto text-xl md:w-10/12 lg:mx-0">
             Transforming Obstacles into Opportunities with Pioneering Technology.
           </p>
 
           <div className="space-y-4 md:space-y-0 md:space-x-4">
             <ScrollToAboutButton>
-              <Button className="w-full md:w-1/3 primary">Get Started</Button>
+              <Button className="primary w-full md:w-1/3">Get Started</Button>
             </ScrollToAboutButton>
           </div>
         </div>

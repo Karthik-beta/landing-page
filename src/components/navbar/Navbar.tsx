@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   NavigationMenu,
@@ -73,26 +73,30 @@ interface CompanionData {
  */
 export const Navbar = ({ companion }: { companion?: CompanionData }) => {
   return (
-    <header className="sticky border-b top-0 z-40 w-full bg-white dark:border-b-white-500 dark:bg-background">
+    <header className="bg-background dark:border-b-white-500 dark:bg-background sticky top-0 z-40 w-full border-b">
       {/* Progress indicator at the top */}
       {companion && (
         <ProgressIndicator
           progress={companion.scrollProgress}
-          visitedSections={companion.visitedSections}
+          visitedSections={[...companion.visitedSections]}
           currentSection={companion.currentSection}
         />
       )}
       <NavigationMenu className="mx-auto">
-        <NavigationMenuList className="container h-14 px-4 w-screen flex justify-between items-center">
-          <NavigationMenuItem className="font-bold flex" key="Logo">
-            <Link href="/" className="ml-2 font-bold text-4xl flex text-text-200" aria-label="Go to homepage">
+        <NavigationMenuList className="container flex h-14 w-screen items-center justify-between px-4">
+          <NavigationMenuItem className="flex font-bold" key="Logo">
+            <Link
+              href="/"
+              className="text-text-200 ml-2 flex text-4xl font-bold"
+              aria-label="Go to homepage"
+            >
               Pivotr.
             </Link>
           </NavigationMenuItem>
 
           {/* desktop */}
-          <NavigationMenuItem key="DesktopNav" className="hidden md:flex justify-center flex-1">
-            <nav className="flex gap-4 items-center">
+          <NavigationMenuItem key="DesktopNav" className="hidden flex-1 justify-center md:flex">
+            <nav className="flex items-center gap-4">
               {routeList.map((route, i) => (
                 <a
                   key={i}
@@ -101,7 +105,7 @@ export const Navbar = ({ companion }: { companion?: CompanionData }) => {
                   rel="noreferrer noopener"
                 >
                   {route.label}
-                </a> 
+                </a>
               ))}
               <ModeToggle />
             </nav>

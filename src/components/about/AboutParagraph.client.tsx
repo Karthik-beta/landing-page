@@ -36,7 +36,7 @@ export const AboutParagraph = ({ text, className = "" }: AboutParagraphProps) =>
       intervalRef.current = window.setTimeout(() => {
         setDisplayedText((prev) => prev + text[currentIndex]);
         setCurrentIndex((prev) => prev + 1);
-      }, 25);
+      }, 75);
     }
 
     return () => {
@@ -57,7 +57,7 @@ export const AboutParagraph = ({ text, className = "" }: AboutParagraphProps) =>
       {displayedText}
       {currentIndex < text.length && (
         <span
-          className="inline-block w-0.5 h-[1em] ml-1 bg-gradient-to-b from-[#61DAFB] to-[#03a3d7] animate-pulse"
+          className="ml-1 inline-block h-[1em] w-0.5 animate-pulse bg-gradient-to-b from-[#ffd6b6] via-[#ff8a65] to-[#c6613f]"
           style={{ animationDuration: "1s" }}
         />
       )}

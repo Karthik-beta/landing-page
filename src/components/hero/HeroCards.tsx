@@ -1,6 +1,7 @@
-'use client';
+"use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import Image from "next/image";
 
 /**
  * Renders an interactive set of cards for the hero section.
@@ -99,55 +100,40 @@ export const HeroCards = () => {
   }, []);
 
   return (
-    <div className="flex flex-col lg:flex-row flex-wrap gap-4 lg:gap-8 relative w-full lg:w-[700px] h-auto lg:h-[500px]">
+    <div className="relative flex h-auto w-full flex-col flex-wrap gap-4 lg:h-[500px] lg:w-[700px] lg:flex-row lg:gap-8">
       <div
         id="hero-svg"
-        className="relative group cursor-pointer"
+        className="group relative cursor-pointer"
         onClick={handleImageClick}
         onMouseMove={handleMouseMove}
       >
-        <img
+        <Image
           ref={imageRef}
           src="/undraw_all-the-data_5lil.svg"
           alt="Data visualization illustration"
-          className={`
-            transition-all duration-700 ease-out
-            ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}
-            ${isClicked ? "scale-105 rotate-1" : "scale-100"}
-            hover:scale-102 hover:-translate-y-2 hover:drop-shadow-2xl
-            group-hover:brightness-110
-            transform-gpu
-          `}
+          width={800}
+          height={600}
+          priority
+          className={`transition-all duration-700 ease-out ${isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"} ${isClicked ? "scale-105 rotate-1" : "scale-100"} transform-gpu group-hover:brightness-110 hover:-translate-y-2 hover:scale-102 hover:drop-shadow-2xl`}
           style={{
             filter: "drop-shadow(0 10px 25px rgba(0, 0, 0, 0.1))",
           }}
         />
 
-        {/* Animated glow effect on hover */}
+        {/* Animated glow effect on hover (theme-based) */}
         <div
-          className={`
-            absolute inset-0 -z-10 rounded-lg
-            bg-gradient-to-r from-[#F596D3]/20 via-[#61DAFB]/20 to-[#03a3d7]/20
-            opacity-0 group-hover:opacity-100 blur-xl
-            transition-opacity duration-500
-            ${isClicked ? "animate-pulse" : ""}
-          `}
+          className={`from-primary/20 via-accent/20 to-primary/30 absolute inset-0 -z-10 rounded-lg bg-gradient-to-r opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100 ${isClicked ? "animate-pulse" : ""} `}
         />
 
         {/* Interactive floating particles */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
           {[...Array(8)].map((_, i) => (
             <div
               key={i}
               ref={(el) => {
                 particlesRef.current[i] = el;
               }}
-              className={`
-                absolute w-1.5 h-1.5 bg-gradient-to-r from-[#61DAFB] to-[#03a3d7] rounded-full
-                opacity-0 group-hover:opacity-70
-                transition-all duration-1000 ease-out
-                ${isVisible ? "animate-float" : ""}
-              `}
+              className={`from-accent to-primary absolute h-1.5 w-1.5 rounded-full bg-gradient-to-r opacity-0 transition-all duration-1000 ease-out group-hover:opacity-70 ${isVisible ? "animate-float" : ""} `}
               style={{
                 left: `${15 + i * 12}%`,
                 top: `${25 + (i % 4) * 18}%`,
@@ -159,17 +145,11 @@ export const HeroCards = () => {
         </div>
 
         {/* Data pulse indicators */}
-        <div className="absolute inset-0 pointer-events-none">
+        <div className="pointer-events-none absolute inset-0">
           {[...Array(4)].map((_, i) => (
             <div
               key={`pulse-${i}`}
-              className={`
-                absolute w-3 h-3 rounded-full
-                bg-gradient-to-r from-[#F596D3] to-[#D247BF]
-                opacity-0 group-hover:opacity-60
-                transition-all duration-500
-                animate-pulse
-              `}
+              className={`from-primary to-primary/70 absolute h-3 w-3 animate-pulse rounded-full bg-gradient-to-r opacity-0 transition-all duration-500 group-hover:opacity-60`}
               style={{
                 left: `${30 + i * 20}%`,
                 top: `${40 + (i % 2) * 25}%`,
@@ -182,14 +162,14 @@ export const HeroCards = () => {
 
         {/* Success ripple effect on click */}
         {isClicked && (
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="w-4 h-4 bg-gradient-to-r from-[#F596D3] to-[#D247BF] rounded-full animate-ping opacity-75" />
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+            <div className="from-primary to-primary/70 h-4 w-4 animate-ping rounded-full bg-gradient-to-r opacity-75" />
             <div
-              className="absolute w-8 h-8 bg-gradient-to-r from-[#61DAFB] to-[#03a3d7] rounded-full animate-ping opacity-50"
+              className="from-accent to-primary absolute h-8 w-8 animate-ping rounded-full bg-gradient-to-r opacity-50"
               style={{ animationDelay: "150ms" }}
             />
             <div
-              className="absolute w-12 h-12 bg-gradient-to-r from-[#F596D3] to-[#03a3d7] rounded-full animate-ping opacity-25"
+              className="from-primary to-accent absolute h-12 w-12 animate-ping rounded-full bg-gradient-to-r opacity-25"
               style={{ animationDelay: "300ms" }}
             />
           </div>
@@ -198,7 +178,7 @@ export const HeroCards = () => {
         {/* Cursor follower effect */}
         <div
           ref={cursorFollowerRef}
-          className="absolute w-6 h-6 bg-gradient-to-r from-[#61DAFB]/30 to-[#03a3d7]/30 rounded-full blur-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+          className="from-accent/30 to-primary/30 pointer-events-none absolute h-6 w-6 rounded-full bg-gradient-to-r opacity-0 blur-xs transition-opacity duration-300 group-hover:opacity-100"
           style={{
             transform: "translate(-50%, -50%)",
           }}

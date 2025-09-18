@@ -16,29 +16,29 @@ export const About = () => {
 
   return (
     <section id="about" className="container py-24 sm:py-32">
-      <div className="border rounded-lg py-12 border-foreground/10 ring-1 ring-foreground/10 bg-gradient-to-r from-foreground/[0.04] via-foreground/[0.02] to-transparent dark:border-white/10 dark:ring-white/[0.06]">
-        <div className="px-6 flex flex-col-reverse md:flex-row gap-8 md:gap-12 ">
+      <div className="border-foreground/10 ring-foreground/10 from-foreground/[0.04] via-foreground/[0.02] rounded-lg border bg-gradient-to-r to-transparent py-12 ring-1 dark:border-white/10 dark:ring-white/[0.06]">
+        <div className="flex flex-col-reverse gap-8 px-6 md:flex-row md:gap-12">
           <Image
-            src="/undraw_team-work_i1f3.svg"
+            src="/undraw_teamwork_8val.svg"
             alt="Team working together illustration"
             width={300}
             height={300}
-            className="w-[300px] h-auto object-contain rounded-lg mx-auto md:mx-0"
+            className="mx-auto h-auto w-[300px] rounded-lg object-contain md:mx-0"
             priority
           />
           <div className="flex flex-col justify-between">
             <div className="pb-6">
-              <h2 className="text-3xl md:text-4xl font-bold">
-                <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
+              <h2 className="text-3xl font-bold md:text-4xl">
+                <span className="from-primary/60 to-primary bg-gradient-to-b bg-clip-text text-transparent">
                   About {""}
                 </span>
                 Us
               </h2>
-              <AboutParagraph text={paragraphText} className="text-xl text-muted-foreground mt-4" />
+              <AboutParagraph text={paragraphText} className="text-muted-foreground mt-4 text-xl" />
             </div>
           </div>
         </div>
-        <div className="px-6 mt-8">
+        <div className="mt-8 px-6">
           <Statistics />
         </div>
       </div>

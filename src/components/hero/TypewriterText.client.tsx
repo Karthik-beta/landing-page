@@ -36,10 +36,10 @@ export const TypewriterText = ({
       {text}
       {showCursor && (
         <span
-          className={`inline-block w-0.5 h-[1em] ml-1 transition-colors duration-300 ${
+          className={`ml-1 inline-block h-[1em] w-0.5 transition-colors duration-300 ${
             isDeleting
-              ? "bg-red-400 animate-pulse"
-              : "bg-gradient-to-b from-[#61DAFB] to-[#03a3d7] animate-pulse"
+              ? "bg-destructive/70 animate-pulse"
+              : "from-accent via-primary/80 to-primary animate-pulse bg-gradient-to-b"
           } ${cursorClassName}`}
           style={{
             animationDuration: isDeleting ? "0.5s" : "1s",

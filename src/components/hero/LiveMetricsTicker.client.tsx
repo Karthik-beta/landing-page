@@ -11,6 +11,9 @@ type MetricItem = {
 };
 
 const BUCKET_MS = 5000;
+// Use a fixed bucket for the very first server render to keep SSR deterministic
+// and avoid hydration mismatches caused by Date.now() differences.
+const STATIC_SSR_BUCKET = 0;
 
 export function LiveMetricsTicker() {
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -20,13 +23,15 @@ export function LiveMetricsTicker() {
     setMounted(true);
   }, []);
 
-  const [bucket, setBucket] = useState(getBucket(Date.now(), BUCKET_MS));
+  // Defer dynamic time-based bucket to the client; keep SSR deterministic
+  const [bucket, setBucket] = useState<number | null>(null);
   useEffect(() => {
+    setBucket(getBucket(Date.now(), BUCKET_MS));
     const id = scheduleNextBucket(setBucket, BUCKET_MS);
     return () => clearTimeout(id);
   }, []);
 
-  const metrics = useMemo(() => computeDeterministicMetrics(bucket), [bucket]);
+  const metrics = useMemo(() => computeDeterministicMetrics(bucket ?? STATIC_SSR_BUCKET), [bucket]);
 
   const a11yText = useMemo(() => {
     const by = indexByKey(metrics);
@@ -72,10 +77,10 @@ export function LiveMetricsTicker() {
         {mounted ? a11yText : "Status: live metrics updating."}
       </span>
 
-      <div className="mb-2 flex items-center gap-2 text-xs text-foreground/70">
+      <div className="text-foreground/70 mb-2 flex items-center gap-2 text-xs">
         <span className="relative inline-flex h-2 w-2">
-          <span className="absolute inline-flex h-2 w-2 animate-ping rounded-full bg-emerald-400/70" />
-          <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+          <span className="bg-primary/70 absolute inline-flex h-2 w-2 animate-ping rounded-full" />
+          <span className="bg-primary relative inline-flex h-2 w-2 rounded-full" />
         </span>
         <span className="font-medium">Live Service Snapshot (IST)</span>
       </div>
@@ -83,8 +88,8 @@ export function LiveMetricsTicker() {
       <div
         className={[
           "relative w-full overflow-hidden rounded-xl",
-          "border border-foreground/10 ring-1 ring-foreground/10",
-          "bg-gradient-to-r from-foreground/[0.04] via-foreground/[0.02] to-transparent",
+          "border-foreground/10 ring-foreground/10 border ring-1",
+          "from-foreground/[0.04] via-foreground/[0.02] bg-gradient-to-r to-transparent",
           "dark:border-white/10 dark:ring-white/[0.06]",
           "dark:from-white/[0.04] dark:via-white/[0.02]",
           "backdrop-blur-sm",
@@ -92,11 +97,11 @@ export function LiveMetricsTicker() {
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-background to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-background to-transparent" />
+        <div className="from-background pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r to-transparent" />
+        <div className="from-background pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l to-transparent" />
 
         {prefersReducedMotion && (
-          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3 p-3">
+          <div className="grid grid-cols-2 gap-3 p-3 md:grid-cols-3 xl:grid-cols-6">
             {metrics.map((m) => (
               <MetricPill key={m.key} item={m} />
             ))}
@@ -105,7 +110,7 @@ export function LiveMetricsTicker() {
 
         {!prefersReducedMotion && (
           <div className="md:hidden">
-            <div className="flex snap-x snap-mandatory overflow-x-auto p-3 gap-3 [-webkit-overflow-scrolling:touch] scrollbar-none">
+            <div className="scrollbar-none flex snap-x snap-mandatory gap-3 overflow-x-auto p-3 [-webkit-overflow-scrolling:touch]">
               {metrics.map((m) => (
                 <div className="snap-start" key={m.key}>
                   <MetricPill item={m} />
@@ -116,10 +121,10 @@ export function LiveMetricsTicker() {
         )}
 
         {!prefersReducedMotion && (
-          <div className="hidden md:block p-0.5">
+          <div className="hidden p-0.5 md:block">
             <div
               ref={trackRef}
-              className="flex gap-3 whitespace-nowrap will-change-transform px-3 py-3"
+              className="flex gap-3 px-3 py-3 whitespace-nowrap will-change-transform"
               style={{ transform: `translateX(${offset}px)` }}
             >
               {doubled.map((m, i) => (
@@ -149,18 +154,18 @@ function MetricPill({ item, ariaHidden }: { item: MetricItem; ariaHidden?: boole
       aria-hidden={ariaHidden || undefined}
       className={[
         "flex items-center gap-2 rounded-lg px-3 py-2",
-        "border border-foreground/10 bg-foreground/[0.03]",
+        "border-foreground/10 bg-foreground/[0.03] border",
         "dark:border-white/10 dark:bg-white/[0.03]",
         "shadow-[inset_0_1px_0_0_rgba(0,0,0,0.02)] dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]",
       ].join(" ")}
     >
       <MetricIcon type={item.key} />
       <div className="flex flex-col leading-tight">
-        <span className="text-[10px] sm:text-xs uppercase tracking-wide text-foreground/60">
+        <span className="text-foreground/60 text-[10px] tracking-wide uppercase sm:text-xs">
           {item.label}
         </span>
-        <span className="text-base sm:text-lg font-semibold tabular-nums">
-          {formatValue(display, item)} {" "}
+        <span className="text-base font-semibold tabular-nums sm:text-lg">
+          {formatValue(display, item)}{" "}
           <span className="text-foreground/50">{item.suffix ?? ""}</span>
         </span>
       </div>
@@ -169,12 +174,17 @@ function MetricPill({ item, ariaHidden }: { item: MetricItem; ariaHidden?: boole
 }
 
 function MetricIcon({ type }: { type: string }) {
-  const common = "w-5 h-5 text-cyan-400 shrink-0";
+  const common = "w-5 h-5 text-primary shrink-0";
   switch (type) {
     case "deployments":
       return (
         <svg className={common} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M4 7h16M4 12h14M4 17h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          <path
+            d="M4 7h16M4 12h14M4 17h10"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
         </svg>
       );
     case "onprem":
@@ -187,32 +197,56 @@ function MetricIcon({ type }: { type: string }) {
     case "cloud":
       return (
         <svg className={common} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M7 17h9a4 4 0 0 0 0-8 6 6 0 0 0-11-1 4 4 0 0 0 2 9z" stroke="currentColor" strokeWidth="1.5" />
+          <path
+            d="M7 17h9a4 4 0 0 0 0-8 6 6 0 0 0-11-1 4 4 0 0 0 2 9z"
+            stroke="currentColor"
+            strokeWidth="1.5"
+          />
         </svg>
       );
     case "invoices":
       return (
         <svg className={common} viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M6 3h9l3 3v15H6z" stroke="currentColor" strokeWidth="1.5" />
-          <path d="M8 9h8M8 13h8M8 17h5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          <path
+            d="M8 9h8M8 13h8M8 17h5"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
         </svg>
       );
     case "modules":
       return (
         <svg className={common} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M4 7h7v7H4zM13 7h7v7h-7zM8.5 14.5h7v7h-7z" stroke="currentColor" strokeWidth="1.5" />
+          <path
+            d="M4 7h7v7H4zM13 7h7v7h-7zM8.5 14.5h7v7h-7z"
+            stroke="currentColor"
+            strokeWidth="1.5"
+          />
         </svg>
       );
     case "latency":
       return (
         <svg className={common} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M3 12h6l3-8 3 16 3-8h3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          <path
+            d="M3 12h6l3-8 3 16 3-8h3"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
         </svg>
       );
     case "uptime":
       return (
         <svg className={common} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M4 12a8 8 0 1 0 16 0A8 8 0 0 0 4 12Zm8-5v5l3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <path
+            d="M4 12a8 8 0 1 0 16 0A8 8 0 0 0 4 12Zm8-5v5l3 3"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
       );
     default:
@@ -245,7 +279,7 @@ function sfc32(a: number, b: number, c: number, d: number) {
     b >>>= 0;
     c >>>= 0;
     d >>>= 0;
-  const t = (a + b) | 0;
+    const t = (a + b) | 0;
     d = (d + 1) | 0;
     a = b ^ (b >>> 9);
     b = (c + (c << 3)) | 0;
@@ -334,8 +368,10 @@ function computeDeterministicMetrics(bucketMs: number): MetricItem[] {
   void Math.round(usersMin + (usersMax - usersMin) * wave + (rngBucket() - 0.5) * 40);
 
   const targetTotal = 18000 + Math.floor(rngDay() * 12000);
-  const progress = easeInOutSine(Math.min(1, Math.max(0, (f - 0.17) / 0.7)));
-  const invoices = Math.max(0, Math.floor(targetTotal * progress));
+  const progressRaw = easeInOutSine(Math.min(1, Math.max(0, (f - 0.17) / 0.7)));
+  // Quantize to 1e-6 to avoid cross-engine float drift at bucket boundaries
+  const progress = Math.round(progressRaw * 1e6) / 1e6;
+  const invoices = Math.max(0, stableFloor(targetTotal * progress));
 
   const baseLatency = 170 + Math.sin(TAU * f) * 15;
   const latency = Math.round(clamp(baseLatency + (rngBucket() - 0.5) * 20, 140, 240));
@@ -394,12 +430,17 @@ function safeToFixed(n: unknown, digits: number) {
   return typeof n === "number" && Number.isFinite(n) ? n.toFixed(digits) : "—";
 }
 function safeInt(n: unknown) {
-  return typeof n === "number" && Number.isFinite(n) ? Math.round(n).toLocaleString() : "—";
+  return typeof n === "number" && Number.isFinite(n) ? Math.round(n).toLocaleString("en-US") : "—";
 }
 function formatValue(n: number, item: MetricItem) {
-  if (item.type === "int") return Math.round(n).toLocaleString();
-  return n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  if (item.type === "int") return Math.round(n).toLocaleString("en-US");
+  return n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 function clamp(n: number, min: number, max: number) {
   return Math.min(max, Math.max(min, n));
+}
+
+// Floor with a tiny epsilon to avoid cross-engine float drift at boundaries
+function stableFloor(x: number) {
+  return Math.floor(x + 1e-9);
 }

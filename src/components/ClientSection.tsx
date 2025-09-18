@@ -1,9 +1,10 @@
 import Image from "next/image";
+import type { StaticImageData } from "next/image";
 
 export interface ClientProps {
   icon?: React.JSX.Element;
-  image?: string;              // when using public/ paths like "/clients/m2nxt.png"
-  importedImage?: any;         // when using static imports like import m2nxt from "@/assets/m2nxt.png"
+  image?: string; // when using public/ paths like "/clients/m2nxt.png"
+  importedImage?: StaticImageData; // when using static imports like import m2nxt from "@/assets/m2nxt.png"
   name: string;
   url?: string;
 }
@@ -22,12 +23,12 @@ const clients: ClientProps[] = [
 
 function LogoItem({ client }: { client: ClientProps }) {
   return (
-    <div className="flex justify-center items-center w-32 h-12 text-muted-foreground hover:opacity-100 transition-opacity shrink-0 mx-4">
+    <div className="text-muted-foreground mx-4 flex h-12 w-32 shrink-0 items-center justify-center transition-opacity hover:opacity-100">
       <a
         href={client.url || "#"}
         target="_blank"
         rel="noreferrer noopener"
-        className="flex justify-center items-center w-full h-full"
+        className="flex h-full w-full items-center justify-center"
       >
         {client.icon && <span>{client.icon}</span>}
         {(client.image || client.importedImage) && (
@@ -37,7 +38,7 @@ function LogoItem({ client }: { client: ClientProps }) {
             width={120}
             height={40}
             loading="lazy"
-            className="h-10 object-contain grayscale opacity-60 hover:grayscale-0 transition-all"
+            className="h-10 object-contain opacity-60 grayscale transition-all hover:grayscale-0"
           />
         )}
       </a>
@@ -51,22 +52,22 @@ export default function ClientSection() {
 
   return (
     <section id="clients" className="container pt-6 pb-6 sm:py-32">
-      <h2 className="text-center text-md lg:text-xl font-bold mb-8 text-primary">
+      <h2 className="text-md text-primary mb-8 text-center font-bold lg:text-xl">
         Our Trusted Clients
       </h2>
 
-      <div className="relative overflow-hidden space-y-6">
-        <div className="flex scroll-left">
+      <div className="relative space-y-6 overflow-hidden">
+        <div className="scroll-left flex">
           {[...firstRow, ...secondRow, ...firstRow].map((client, index) => (
             <LogoItem key={`first-${client.name}-${index}`} client={client} />
           ))}
         </div>
 
-        <div className="flex scroll-right" style={{ transform: "translateX(-50%)" }}>
+        <div className="scroll-right flex" style={{ transform: "translateX(-50%)" }}>
           {[...secondRow, ...firstRow, ...secondRow, ...firstRow, ...secondRow].map(
             (client, index) => (
               <LogoItem key={`second-${client.name}-${index}`} client={client} />
-            )
+            ),
           )}
         </div>
       </div>

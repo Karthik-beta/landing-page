@@ -1,5 +1,5 @@
 // components/progress-indicator.tsx
-'use client';
+"use client";
 
 import React from "react";
 import { cn } from "@/lib/utils";
@@ -47,9 +47,9 @@ export const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
   return (
     <div className={cn("w-full", className)}>
       {/* Main progress bar */}
-      <div className="h-1 bg-muted/30 relative overflow-hidden">
+      <div className="bg-muted/30 relative h-1 overflow-hidden">
         <div
-          className="h-full bg-gradient-to-r from-primary via-primary/80 to-primary transition-all duration-700 ease-out"
+          className="from-primary via-primary/80 to-primary h-full bg-gradient-to-r transition-all duration-700 ease-out"
           style={{ width: `${progress}%` }}
         />
         {/* Shimmer effect */}
@@ -65,10 +65,10 @@ export const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
 
       {/* Optional section indicator */}
       {showDetails && progress > 5 && (
-        <div className="px-4 py-1 text-xs text-muted-foreground">
+        <div className="text-muted-foreground px-4 py-1 text-xs">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+              <div className="bg-primary h-1.5 w-1.5 animate-pulse rounded-full" />
               <span className="font-medium">
                 {SECTION_LABELS[currentSection as keyof typeof SECTION_LABELS] || "Exploring"}
               </span>
