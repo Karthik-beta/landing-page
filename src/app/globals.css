@@ -87,8 +87,8 @@
 /* *=========== Claude.ai Inspired Theme =========== */
 @layer base {
   :root {
-    --background: 48 33% 97%;
-    --foreground: 240 10% 18.9%;
+    --background: 48 2% 98%;
+    --foreground: 60 5% 8%; /* before => --foreground: 240 10% 3.9%; */
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
@@ -112,8 +112,8 @@
   }
 
   .dark {
-    --background: 60 3% 15%;
-    --foreground: 240 5% 95%;
+    --background: 60 5% 15%;
+    --foreground: 48 2% 98%; /* before => --foreground: 240 5% 95%; */
     --card: 240 5% 12%;
     --card-foreground: 240 5% 95%;
     --popover: 240 6% 10%;

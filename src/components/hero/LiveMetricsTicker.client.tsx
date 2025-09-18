@@ -15,6 +15,10 @@ const BUCKET_MS = 5000;
 export function LiveMetricsTicker() {
   const prefersReducedMotion = usePrefersReducedMotion();
   const [paused, setPaused] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const [bucket, setBucket] = useState(getBucket(Date.now(), BUCKET_MS));
   useEffect(() => {
@@ -65,7 +69,7 @@ export function LiveMetricsTicker() {
   return (
     <div className="w-full">
       <span className="sr-only" role="status" aria-live="polite">
-        {a11yText}
+        {mounted ? a11yText : "Status: live metrics updating."}
       </span>
 
       <div className="mb-2 flex items-center gap-2 text-xs text-foreground/70">
