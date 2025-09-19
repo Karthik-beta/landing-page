@@ -10,6 +10,7 @@ import dynamic from "next/dynamic";
 const ModeToggle = dynamic(() => import("./mode-toggle").then((m) => m.ModeToggle), { ssr: false });
 import { ProgressIndicator } from "./ProgressIndicator";
 import Link from "next/link";
+import Image from "next/image";
 import MobileMenu from "./Navbar.client";
 
 /**
@@ -86,29 +87,18 @@ export const Navbar = ({ companion }: { companion?: CompanionData }) => {
         <NavigationMenuList className="container flex h-14 w-screen items-center justify-between px-4">
           <NavigationMenuItem className="flex font-bold" key="Logo">
             <Link
-  href="/"
-  className="text-text-200 ml-2 flex text-4xl font-bold"
-  aria-label="Go to homepage"
->
-  <span className="sr-only">Pivotr.</span>
-  <span aria-hidden="true" className="inline-flex items-baseline">
-    P
-    <span className="relative inline-block leading-none">
-      ı
-      <span
-        aria-hidden="true"
-        className="absolute left-1/2 -translate-x-1/2 -top-[-0.16em] w-[0.18em] h-[0.18em] rounded-full bg-primary pointer-events-none"
-      />
-    </span>
-    votr
-    {/* <span className="text-primary">.</span> */}
-    <span
-        aria-hidden="true"
-        className="-top-[-0.2em] w-[0.18em] h-[0.18em] rounded-full bg-primary pointer-events-none"
-      />
-  </span>
-</Link>
-
+              href="/"
+              className="text-text-200 ml-2 flex text-4xl font-bold"
+              aria-label="Go to homepage"
+            >
+              {/* Show light logo in light mode, dark logo in dark mode */}
+              <span className="block dark:hidden">
+                <Image src="/pivotr_light_mode_1920x1080.svg" alt="Pivotr Logo Light" width={128} height={40} />
+              </span>
+              <span className="hidden dark:block">
+                <Image src="/pivotr_dark_mode_1920x1080.svg" alt="Pivotr Logo Dark" width={128} height={40} />
+              </span>
+            </Link>
           </NavigationMenuItem>
 
           {/* desktop */}
