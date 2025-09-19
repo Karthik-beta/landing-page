@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 90" role="img" aria-labelledby="logoTitle logoDesc" width="1920" height="1080">
   <defs>
     <linearGradient id="brandGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#D78A6F" />
-      <stop offset="100%" stop-color="#C6785C" />
+      <stop offset="0%" stop-color="#D97757" />
+      <stop offset="100%" stop-color="#D97757" />
     </linearGradient>
   </defs>
   
