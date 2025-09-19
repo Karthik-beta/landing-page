@@ -67,8 +67,8 @@ export const HowItWorks = () => {
       </p>
 
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
-        {features.map(({ icon, title, description }: FeatureProps) => (
-          <Card key={title} className="bg-muted/50">
+        {features.map(({ key, icon, title, description }: FeatureProps) => (
+          <Card key={key} className="bg-muted/50">
             <CardHeader>
               <CardTitle className="grid place-items-center gap-4">
                 {icon}

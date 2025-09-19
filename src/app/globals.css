@@ -89,7 +89,7 @@
   :root {
     /* Claude.ai brand palette (light) */
     /* Ivory Light background, Slate Dark foreground */
-    --background: 60 22% 97%; /* #FAFAF7 */
+    --background: 60 1% 98%; /* #FAFAF7 */
     --foreground: 0 0% 10%; /* #191919 */
 
     --card: 0 0% 100%; /* #FFFFFF */
@@ -103,14 +103,14 @@
     --primary-foreground: 0 0% 98%; /* on-primary text */
 
     /* Cloud tones for secondary/muted */
-    --secondary: 60 4% 74%; /* Cloud Light #BFBFBA */
+    --secondary: 60 3% 75%; /* Cloud Light #BFBFBA */
     --secondary-foreground: 0 0% 15%;
 
-    --muted: 60 4% 74%;
-    --muted-foreground: 60 2% 56%; /* Cloud Medium #91918D */
+    --muted: 60 3% 75%;
+    --muted-foreground: 60 3% 40%; /* Cloud Medium #91918D */
 
     /* Manilla as accent */
-    --accent: 38 49% 82%; /* #E8D8BC */
+    --accent: 38 19% 91%; /* #E8D8BC */
     --accent-foreground: 0 0% 15%;
 
     /* Error */
@@ -127,9 +127,9 @@
   .dark {
     /* Claude.ai brand palette (dark) */
     --background: 0 0% 10%; /* Slate Dark #191919 */
-    --foreground: 60 22% 97%; /* Ivory Light #FAFAF7 */
+    --foreground: 60 1% 98%; /* Ivory Light #FAFAF7 */
 
-    --card: 60 1% 15%; /* Slate Medium #262625 */
+    --card: 60 3% 15%; /* Slate Medium #262625 */
     --card-foreground: 60 22% 97%;
 
     --popover: 60 1% 12%;
@@ -140,14 +140,14 @@
     --primary-foreground: 0 0% 100%;
 
     /* Cloud tones */
-    --secondary: 60 2% 40%; /* Cloud Dark #666663 */
+    --secondary: 60 3% 40%; /* Cloud Dark #666663 */
     --secondary-foreground: 60 22% 97%;
 
-    --muted: 60 2% 25%;
-    --muted-foreground: 60 4% 74%;
+    --muted: 60 3% 25%;
+    --muted-foreground: 60 3% 75%;
 
     /* Kraft/Manilla accents */
-    --accent: 25 50% 66%; /* Kraft #D4A27F */
+    --accent: 25 40% 83%; /* Kraft #D4A27F */
     --accent-foreground: 0 0% 15%;
 
     /* Error */

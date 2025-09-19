@@ -86,12 +86,29 @@ export const Navbar = ({ companion }: { companion?: CompanionData }) => {
         <NavigationMenuList className="container flex h-14 w-screen items-center justify-between px-4">
           <NavigationMenuItem className="flex font-bold" key="Logo">
             <Link
-              href="/"
-              className="text-text-200 ml-2 flex text-4xl font-bold"
-              aria-label="Go to homepage"
-            >
-              Pivotr.
-            </Link>
+  href="/"
+  className="text-text-200 ml-2 flex text-4xl font-bold"
+  aria-label="Go to homepage"
+>
+  <span className="sr-only">Pivotr.</span>
+  <span aria-hidden="true" className="inline-flex items-baseline">
+    P
+    <span className="relative inline-block leading-none">
+      ı
+      <span
+        aria-hidden="true"
+        className="absolute left-1/2 -translate-x-1/2 -top-[-0.16em] w-[0.18em] h-[0.18em] rounded-full bg-primary pointer-events-none"
+      />
+    </span>
+    votr
+    {/* <span className="text-primary">.</span> */}
+    <span
+        aria-hidden="true"
+        className="-top-[-0.2em] w-[0.18em] h-[0.18em] rounded-full bg-primary pointer-events-none"
+      />
+  </span>
+</Link>
+
           </NavigationMenuItem>
 
           {/* desktop */}
