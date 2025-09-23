@@ -35,13 +35,30 @@ export default function ContactFormClient() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formDataRef.current),
         });
-        if (!res.ok) throw new Error("Failed to submit");
+        if (!res.ok) {
+          const payload: unknown = await res.json().catch(() => ({}));
+          const raw =
+            typeof payload === "object" && payload !== null
+              ? (payload as { error?: unknown; message?: unknown }).error ??
+                (payload as { error?: unknown; message?: unknown }).message ??
+                payload
+              : payload;
+          const msg =
+            typeof raw === "string"
+              ? raw
+              : typeof raw === "object" && raw !== null
+                ? ((raw as { message?: unknown }).message as string) || JSON.stringify(raw)
+                : `Request failed with status ${res.status}`;
+          toast.error("Submission failed", { description: msg });
+          return;
+        }
         toast.success("Your message has been sent successfully!");
         if (formRef.current) {
           formRef.current.reset();
         }
         formDataRef.current = { name: "", email: "", subject: "", message: "" };
-      } catch (err) {
+      } catch (error) {
+        console.error("Contact form submission failed:", error);
         toast.error("There was a problem sending your message.", {
           description: "Please try again.",
         });

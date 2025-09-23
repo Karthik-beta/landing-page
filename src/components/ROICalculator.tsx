@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 // import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 // import { Input } from "@/components/ui/input";
@@ -273,7 +273,7 @@ export const ROICalculator: React.FC = () => {
     return totalTimeSavedPerMonth * hourlyRate;
   };
 
-  const calculate = () => {
+  const calculate = useCallback(() => {
     const numEmployees = clampNumber(parseNum(employees));
     const avgSalary = clampNumber(parseNum(salary));
     const hoursSpent = clampNumber(parseNum(hours));
@@ -340,12 +340,12 @@ export const ROICalculator: React.FC = () => {
     setDailySavings(perDay);
     setRangeMonthlyMin(rangeMin);
     setRangeMonthlyMax(rangeMax);
-  };
+  }, [employees, salary, hours, timeReductionPct, workHoursPerWeek, weeksPerMonth]);
 
   // Real-time recalculation when inputs change
   useEffect(() => {
     calculate();
-  }, [employees, salary, hours, timeReductionPct, workHoursPerWeek, weeksPerMonth]);
+  }, [calculate]);
 
   const hasResults =
     timeSavings !== null &&

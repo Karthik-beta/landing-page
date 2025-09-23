@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 /**
  * Renders the footer section of the website.
  *
@@ -13,14 +15,13 @@ export const Footer = () => {
 
       <section className="container py-20 grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-x-12 gap-y-8">
         <div className="col-span-full xl:col-span-2  space-y-2">
-          <a
-            rel="noreferrer noopener"
+          <Link
             href="/"
             className="font-bold text-xl flex items-center gap-2"
           >
             {/* <LogoIcon /> */}
             Pivotr Technologies Pvt Ltd.
-          </a>
+          </Link>
           <p className="text-sm text-muted-foreground">
             <span className="font-bold">CIN :</span> U62020KA2024PTC193295
           </p>
