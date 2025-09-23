@@ -10,6 +10,9 @@ import { Services } from "@/components/Services";
 import { Certifications } from "@/components/Certifications";
 import { Cta } from "@/components/Cta";
 import { ROICalculator } from "@/components/ROICalculator";
+import { FAQ } from "@/components/FAQ";
+import { ContactForm } from "@/components/contact-form/ContactForm";
+import { Footer } from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -26,8 +29,12 @@ export default function Home() {
         <Certifications />
         <Cta />
         <ROICalculator />
+        <FAQ />
+        <ContactForm />
       </main>
-      <footer className="row-start-3 flex flex-wrap items-center justify-center gap-[24px]"></footer>
+      <footer className="">
+        <Footer />
+      </footer>
     </div>
   );
 }
