@@ -73,7 +73,8 @@ export const Services = () => {
 						{serviceList.map(({ icon, title, description, details }: ServiceProps) => (
 							<Card
 								key={title}
-								className="group cursor-pointer transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/10 hover:border-primary/30 bg-linear-to-br from-background to-background/50"
+								className="bg-card border border-border/60 shadow-md hover:shadow-lg transition-shadow duration-200"
+								// className="group cursor-pointer transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/10 hover:border-primary/30 bg-linear-to-br from-background to-background/50"
 						 >
 								<CardHeader className="space-y-1 flex md:flex-row justify-start items-start gap-4">
 									<div className="mt-1 bg-primary/20 p-1 rounded-2xl group-hover:bg-primary/30 transition-colors duration-300 group-hover:scale-110 transform">

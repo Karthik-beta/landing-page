@@ -3,6 +3,7 @@ import { Inter, Source_Code_Pro } from "next/font/google";
 import "./globals.css";
 import "./index.css";
 import { ThemeProvider } from "next-themes";
+import { Toaster } from "@/components/ui/sonner";
 
 const interSans = Inter({
   variable: "--font-geist-sans",
@@ -30,6 +31,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
         </ThemeProvider>
+        <Toaster richColors closeButton position="top-right" />
       </body>
     </html>
   );
