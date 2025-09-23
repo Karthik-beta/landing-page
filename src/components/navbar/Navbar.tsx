@@ -12,6 +12,7 @@ import { ProgressIndicator } from "./ProgressIndicator";
 import Link from "next/link";
 import Image from "next/image";
 import MobileMenu from "./Navbar.client";
+import { useState, useEffect } from "react";
 
 /**
  * Props for a single route in the navigation bar.
@@ -57,7 +58,7 @@ const routeList: RouteProps[] = [
 
 interface CompanionData {
   scrollProgress: number;
-  visitedSections: Set<string>;
+  visitedSections: string[];
   currentSection: string;
 }
 
@@ -72,17 +73,54 @@ interface CompanionData {
  * @param {CompanionData} [props.companion] - Optional data for the progress indicator.
  * @returns {JSX.Element} The rendered navigation bar.
  */
-export const Navbar = ({ companion }: { companion?: CompanionData }) => {
+export const Navbar = () => {
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [visitedSections, setVisitedSections] = useState<Set<string>>(new Set());
+  const [currentSection, setCurrentSection] = useState("hero");
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const progress = (scrollTop / scrollHeight) * 100;
+      setScrollProgress(Math.min(progress, 100));
+
+      // Simple section detection based on scroll position
+      const sections = ["hero", "about", "products", "howItWorks"];
+      let newCurrentSection = "hero";
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element && element.getBoundingClientRect().top <= window.innerHeight / 2) {
+          newCurrentSection = section;
+        }
+      }
+      setCurrentSection(newCurrentSection);
+
+      // Track visited sections (simplified - add current if not visited)
+      if (!visitedSections.has(newCurrentSection)) {
+        setVisitedSections(prev => new Set([...prev, newCurrentSection]));
+      }
+    };
+
+    handleScroll(); // Initial call
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [visitedSections, currentSection]); // Add dependencies
+
+  const companion: CompanionData = {
+    scrollProgress,
+    visitedSections: Array.from(visitedSections),
+    currentSection,
+  };
+
   return (
     <header className="bg-background dark:border-b-white-500 dark:bg-background sticky top-0 z-40 w-full border-b">
       {/* Progress indicator at the top */}
-      {companion && (
-        <ProgressIndicator
-          progress={companion.scrollProgress}
-          visitedSections={[...companion.visitedSections]}
-          currentSection={companion.currentSection}
-        />
-      )}
+      <ProgressIndicator
+        progress={companion.scrollProgress}
+        visitedSections={companion.visitedSections}
+        currentSection={companion.currentSection}
+      />
       <NavigationMenu className="mx-auto">
         <NavigationMenuList className="container flex h-14 w-screen items-center justify-between px-4">
           <NavigationMenuItem className="flex font-bold" key="Logo">

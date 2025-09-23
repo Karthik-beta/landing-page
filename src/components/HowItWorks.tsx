@@ -56,7 +56,8 @@ export const HowItWorks = () => {
     <section id="howItWorks" className="container py-24 text-center sm:py-32">
       <h2 className="text-3xl font-bold md:text-4xl">
         How It{" "}
-        <span className="from-primary/60 to-primary bg-linear-to-b bg-clip-text text-transparent">
+        {/* Tailwind v4: use bg-gradient-to-b (not bg-linear-to-b) */}
+        <span className="from-primary/60 to-primary bg-gradient-to-b bg-clip-text text-transparent">
           Works{" "}
         </span>
         Step-by-Step Guide
@@ -68,14 +69,17 @@ export const HowItWorks = () => {
 
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
         {features.map(({ key, icon, title, description }: FeatureProps) => (
-          <Card key={key} className="bg-muted/50">
-            <CardHeader>
-              <CardTitle className="grid place-items-center gap-4">
+          <Card
+            key={key}
+            className="bg-card border border-border/60 shadow-md hover:shadow-lg transition-shadow duration-200"
+          >
+            <CardHeader className="p-6">
+              <CardTitle className="text-2xl leading-none text-foreground font-semibold tracking-tight grid place-items-center gap-4">
                 {icon}
                 {title}
               </CardTitle>
             </CardHeader>
-            <CardContent>{description}</CardContent>
+            <CardContent className="p-6 pt-0 text-muted-foreground">{description}</CardContent>
           </Card>
         ))}
       </div>

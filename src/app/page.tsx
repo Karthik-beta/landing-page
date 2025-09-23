@@ -5,6 +5,8 @@ import ClientSection from "@/components/ClientSection";
 import { About } from "@/components/about/About";
 import { Products } from "@/components/products/Products";
 import { HowItWorks } from "@/components/HowItWorks";
+import { Features } from "@/components/Features";
+import { Services } from "@/components/Services";
 
 export default function Home() {
   return (
@@ -16,6 +18,8 @@ export default function Home() {
         <About />
         <Products />
         <HowItWorks />
+        <Features />
+  <Services />
       </main>
       <footer className="row-start-3 flex flex-wrap items-center justify-center gap-[24px]"></footer>
     </div>
